@@ -2,7 +2,8 @@ import * as React from 'react';
 import {useState} from 'react';
 import Chip from '@mui/material/Chip';
 import Autocomplete, {AutocompleteRenderGetTagProps} from '@mui/material/Autocomplete';
-
+import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
+import LinkRoundedIcon from '@mui/icons-material/LinkRounded';
 import {AutocompleteGetTagProps, Box, Tooltip} from "@mui/material";
 import TextField from "@mui/material/TextField";
 
@@ -34,9 +35,13 @@ export default function Hyperlink(data: HyperlinkProps) {
         return (
             <Tooltip title={"blep blap mlip"}>
                 <Chip variant="outlined"
+                      icon={<LinkRoundedIcon/>}
                       label={url}
                       onClick={() => window.open(processUrlString(url), "_blank", "noopener,noreferrer")}
                     // onDelete={() => setValue([])} // we dont want (X) button in chip?
+                      onDelete={() => {
+                      }}
+                      deleteIcon={<OpenInNewRoundedIcon/>}
                 />
             </Tooltip>
         )
@@ -118,7 +123,6 @@ function processUrlString(url: string): string {
         if (trimmedString.length > 4 && trimmedString.substring(0, 4).toLowerCase() === "ftp.") {
             return "ftp://" + trimmedString;
         }
-
         return "https://" + trimmedString;
     }
 
@@ -136,4 +140,3 @@ function processUrlString(url: string): string {
 function getTagProps() {
     throw new Error('Function not implemented.');
 }
-
