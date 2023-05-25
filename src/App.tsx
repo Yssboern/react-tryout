@@ -1,6 +1,5 @@
 import React from 'react';
 import {Box} from "@mui/material";
-import Tags from "./components/AutocompleteShowcase";
 import Hyperlink, {hyperlinkData} from "./components/Hyperlink";
 
 function App() {
@@ -8,7 +7,7 @@ function App() {
         <div className="App">
             <Box sx={{width: 300, paddingTop: 5, paddingLeft: 5,}}>
                 {Hyperlink(hyperlinkData)}
-                {Tags()}
+                {/*{Tags()}*/}
             </Box>
         </div>
     )
