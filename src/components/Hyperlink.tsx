@@ -17,7 +17,7 @@ export interface HyperlinkProps {
 }
 
 export var hyperlinkData: HyperlinkProps = {
-    value: ["https://google.com"],
+    value: ["https://stackoverflow.com/questions/59057057/material-ui-how-to-specify-maxwidth-of-chip"],
     label: "Blep Blap",
     readOnly: false,
     disabled: false,
@@ -33,14 +33,14 @@ export default function Hyperlink(data: HyperlinkProps) {
 
         // console.log("LinkChip: " + getTagProps.toString())
         return (
-            <Tooltip title={"blep blap mlip"}>
+            <Tooltip title={value}>
                 <Chip variant="outlined"
                       icon={<LinkRoundedIcon/>}
                       label={url}
+                      sx={{maxWidth: 210}} // TODO - make it relative to field width
                       onClick={() => window.open(processUrlString(url), "_blank", "noopener,noreferrer")}
-                    // onDelete={() => setValue([])} // we dont want (X) button in chip?
                       onDelete={() => {
-                      }}
+                      }} // we need it to have deleteIcon
                       deleteIcon={<OpenInNewRoundedIcon/>}
                 />
             </Tooltip>
