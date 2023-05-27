@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import Chip from '@mui/material/Chip';
-import Autocomplete, {AutocompleteRenderGetTagProps} from '@mui/material/Autocomplete';
+import Autocomplete, {AutocompleteRenderGetTagProps, AutocompleteRenderInputParams} from '@mui/material/Autocomplete';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import LinkRoundedIcon from '@mui/icons-material/LinkRounded';
 import {AutocompleteGetTagProps, Box, Tooltip} from "@mui/material";
@@ -29,6 +29,10 @@ export default function Hyperlink(data: HyperlinkProps) {
 
     const [value, setValue] = useState(data.value)
 
+    function openUrl() {
+        return () => window.open(processUrlString(value[0]), "_blank", "noopener,noreferrer");
+    }
+
     const LinkChip = (url: string, index: number, getTagProps: AutocompleteGetTagProps) => {
 
         // console.log("LinkChip: " + getTagProps.toString())
@@ -37,11 +41,10 @@ export default function Hyperlink(data: HyperlinkProps) {
                 <Chip variant="outlined"
                       icon={<LinkRoundedIcon/>}
                       label={url}
-                      sx={{maxWidth: 210}} // TODO - make it relative to field width
-                      onClick={() => window.open(processUrlString(url), "_blank", "noopener,noreferrer")}
-                      onDelete={() => {
-                      }} // we need it to have deleteIcon
+                      onDelete={openUrl()}
                       deleteIcon={<OpenInNewRoundedIcon/>}
+                      sx={{maxWidth: 210}} // TODO - make it relative to field width
+                    // onClick={openUrl()} // should we click on entire chip or only OpenInNew icon?
                 />
             </Tooltip>
         )
@@ -69,6 +72,21 @@ export default function Hyperlink(data: HyperlinkProps) {
         }
     }
 
+    function allowInput() {
+        return value.length > 0 ? "" : data.placeholder;
+    }
+
+    function getInputField() {
+        return (params: AutocompleteRenderInputParams) => (
+            <TextField
+                {...params}
+                variant="filled"
+                label={data.label}
+                placeholder={allowInput()} //use callback?
+            />
+        );
+    }
+
     return (
         <Autocomplete
             value={value}
@@ -80,14 +98,7 @@ export default function Hyperlink(data: HyperlinkProps) {
             defaultValue={["google.com"]}
             freeSolo
             renderTags={getChips()}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    variant="filled"
-                    label={data.label}
-                    placeholder={data.value.length > 1 ? "" : "Provide URL"}
-                />
-            )}
+            renderInput={getInputField()}
         />
     );
 }
