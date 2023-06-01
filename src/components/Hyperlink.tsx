@@ -48,17 +48,13 @@ export default function Hyperlink(data: HyperlinkProps) {
     )
   }
 
-  function allowInput() {
-    return url.length > 0 ? "" : data.placeholder;
-  }
-
   function getInputField() {
     return (params: AutocompleteRenderInputParams) => (
         <TextField
             {...params}
             variant="filled"
             label={data.label}
-            placeholder={allowInput()}
+            placeholder={url.length > 0 ? "" : data.placeholder}
         />
     );
   }
@@ -68,13 +64,13 @@ export default function Hyperlink(data: HyperlinkProps) {
           value={url}
           disabled={data.disabled}
           readOnly={data.readOnly}
+          defaultValue={data.defaultValue}
           onChange={handleUrlChange}
-          multiple={true}
-          options={[]}
-          defaultValue={["google.com"]}
-          freeSolo
           renderTags={getChip()}
           renderInput={getInputField()}
+          multiple={true} // allows chip
+          freeSolo
+          options={[]}
       />
   );
 }
