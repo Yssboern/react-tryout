@@ -29,17 +29,12 @@ export default function Hyperlink(data: HyperlinkProps) {
 
   const [url, setUrl] = useState(data.value)
 
-  const handleUrlChange = (event: React.SyntheticEvent<Element, Event>, v: string[]) => {
-    console.log("handleChange 1:" + v)
-    if (v.length === 0) {
-      setUrl([])
-    } else {
-      setUrl([v[v.length - 1]])
-    }
+  function handleUrlChange(event: React.SyntheticEvent<Element, Event>, newValue: string[]) {
+    (newValue.length === 0) ? setUrl([]) : setUrl([newValue[newValue.length - 1]])
   }
 
-  const getChip = () => () => {
-    return (
+  function getChip() {
+    return () => (
         <Tooltip title={url[0]}>
           <Chip variant="outlined"
                 icon={<LinkRoundedIcon/>}
@@ -63,7 +58,7 @@ export default function Hyperlink(data: HyperlinkProps) {
             {...params}
             variant="filled"
             label={data.label}
-            placeholder={allowInput()} //use callback?
+            placeholder={allowInput()}
         />
     );
   }
